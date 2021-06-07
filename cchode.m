@@ -26,16 +26,33 @@ w = roots(q)
 %Case 2 if the roots are real and repeated
     if (b*b == 4*a*c)
         
-        fprintf('Y = C1xe^%.4gx + C2e^%.4gx',w(2), w(2));
-        fprintf('Yp = C1e^%.4gx', w(1));
-        fprintf(' + %.4gC1xe^%.4gx + %.4gC2e^%.4gx\n',w(2), w(2), w(2), w(2));
-        
-        
+        fprintf('Y = C1xe^%.4gx + C2e^%.4gx',w(2), w(2));        
         C2 = y_0;
         C1 = y_prime_0 - C2 * w(1);
         
 
         fprintf('Y = %.4gxe^%.4gx + %.4ge^%.4gx\n',C1 , w(2), C2, w(2));
-    end    
+    end
+
+%Case 3 - Complex roots
+    if (b*b < 4*a*c)
+        r = real(w(1,1));
+        i = imag(w(1,1));
+        y = exp(real(w(1,1))*x)*(C1 *cos(r*x)+ C2 *sin(r*x));
+        fprintf('Y = e^%.4gx[ C1cos%.4gx + C2sin%.4gx ]\n', r, i, i);
+        C1 = y_0;
+        C2 = (y_prime_0 -C1 * r)/i;
+        if(C1 == 0)
+            fprintf('Y = e^%.4gx[  %.4gsin%.4gx ]\n',r , C2, i);
+        end
+        if(C2 == 0)
+            fprintf('Y = e^%.4gx[  %.4gcos%.4gx ]\n',r , C1, i);
+        end
+        
+        if(C1~=0 && C2 ~=0 )
+            fprintf('Y = e^%.4gx[ %.4gcos%.4gx + %.4gsin%.4gx ]\n',r , C1, i, C2, i);
+        end       
+        fprintf('');
+    end
 
 
