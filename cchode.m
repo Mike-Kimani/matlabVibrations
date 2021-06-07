@@ -9,24 +9,24 @@ fprintf(' + %.15gy\n',c);
 y_0 = input('Enter the value y(0): ');
 y_prime_0 = input('Enter the value of yprime(0): ');
 q = [a, b, c];
-w = roots(q)
+w = roots(q);
     if (b*b > 4*a*c)
         fprintf('Y = C1e^%.4gx', w(1));
-        fprintf(' + C2e^%.4gx',w(2));
+        fprintf(' + C2e^%.4gx\n',w(2));
         
         A = [1 ,1;
             w(1), w(2)];
         B = [y_0;
             y_prime_0];
-        sol = linsolve(A, B)
+        sol = linsolve(A, B);
         fprintf('Y = %.4ge^%.4gx', sol(1), w(1));
-        fprintf(' + %.4ge^%.4gx', sol(2), w(2));
+        fprintf(' + %.4ge^%.4gx\n', sol(2), w(2));
     end
     
 %Case 2 if the roots are real and repeated
     if (b*b == 4*a*c)
         
-        fprintf('Y = C1xe^%.4gx + C2e^%.4gx',w(2), w(2));        
+        fprintf('Y = C1xe^%.4gx + C2e^%.4gx\n',w(2), w(2));        
         C2 = y_0;
         C1 = y_prime_0 - C2 * w(1);
         
@@ -38,7 +38,7 @@ w = roots(q)
     if (b*b < 4*a*c)
         r = real(w(1,1));
         i = imag(w(1,1));
-        y = exp(real(w(1,1))*x)*(C1 *cos(r*x)+ C2 *sin(r*x));
+       % y = exp(real(w(1,1))*x)*(C1 *cos(r*x)+ C2 *sin(r*x));
         fprintf('Y = e^%.4gx[ C1cos%.4gx + C2sin%.4gx ]\n', r, i, i);
         C1 = y_0;
         C2 = (y_prime_0 -C1 * r)/i;
@@ -54,5 +54,11 @@ w = roots(q)
         end       
         fprintf('');
     end
+    
+    %Using dsolve
+    syms y
+    y = dsolve('a*D2y + b*Dy + c*y = 0', 'y(0) = y_0', 'Dy(0) = y_prime_0');
+    pretty(y)
+    
 
 
