@@ -21,7 +21,7 @@ w = roots(q)
             y_prime_0];
         sol = linsolve(A, B)
         fprintf('Y = %.4ge^%.4gx', sol(1), w(1));
-        fprintf(' + %.4ge^%.4gx', sol(2), w(2));
+        fprintf(' + %.4ge^%.4gx',w(2));
     end
 
     
